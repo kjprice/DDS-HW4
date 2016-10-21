@@ -5,17 +5,26 @@ output: pdf_document
 
 # Bootstrap Normal Distribution
 
-First we create the normal distribution called `normal.distribution`
+First we create the two normal distributions called `normal.distribution1` and `normal.distribution2`.
 
 ```{r}
-normal.distribution = rnorm(1000)
+normal.distribution1 = rnorm(100)
+normal.distribution2 = rnorm(1000)
 ```
 
-We would expect the histogram to already show a normal distribution
+## Histograms of Normal Distributions
 
-```{r hist.Normal.Distribution, echo=FALSE}
-hist(normal.distribution)
+```{r hist.Normal.Distribution1, echo=FALSE}
+hist(normal.distribution1)
 ```
+
+We would expect the first distribution to have a relatively normal distribution with 100 observations.
+
+```{r hist.Normal.Distribution2, echo=FALSE}
+hist(normal.distribution2)
+```
+
+And the second distribution to be more normal than the first with 100 observations.
 
 ### Bootstrap function
 
@@ -38,56 +47,71 @@ bootstrap = function(distribution) {
 
 ```
 
-Now, let's see what happens when we apply the `bootstrap` method against our `normal.distribution` variable and graph the results:
+Let's see what happens when we apply the `bootstrap` method against our `normal.distribution1` and `normal.distribution2` variables and graph the results:
 
 
-```{r}
-bootstrap.distribution = bootstrap(normal.distribution)
+```{r Distribution1, fig.width=4, echo=FALSE}
+bootstrap.distribution1 = bootstrap(normal.distribution1)
 
-hist(bootstrap.distribution)
+hist(bootstrap.distribution1, main = "")
+```
+```{r Distribution2, fig.width=4, echo=FALSE}
+bootstrap.distribution2 = bootstrap(normal.distribution2)
+
+hist(bootstrap.distribution2, main = "")
 ```
 
 As we can see, the bootstrap distribution is even more normal than the original and the amount of variance is much smaller in the bootstrap distribution
 
 ```{r}
-sd(normal.distribution)
-sd(bootstrap.distribution)
+sd(normal.distribution1)
+sd(bootstrap.distribution1)
 ```
 
 # Bootrstrap Exponential Distribution
 
-Now let's create an exponential distribution and apply the same steps that we did with the normal distribution above.
+Now let's create two exponential distributions and apply the same steps that we did with the normal distributions above.
 
 ```{r}
-exp.distribution = rexp(1000)
+exp.distribution1 = rexp(100)
+exp.distribution2 = rexp(1000)
 ```
 
-As we can see, the data is heavily skewed with a strong, right-tailed distribution.
+As we can see, the data is heavily skewed with a strong, right-tailed distribution for both sets.
 
-```{r, echo=FALSE}
-hist(exp.distribution)
+```{r, echo=FALSE, fig.width=4}
+hist(exp.distribution1, main="")
+```
+```{r, echo=FALSE, fig.width=4}
+hist(exp.distribution2, main="")
 ```
 
-Applying the `bootstrap` method against our `exp.distribution` variable, we can see that the new distribution is almost completely normal...an amazing transformation from the original, right-tailed distribution.
+Applying the `bootstrap` method against our `exp.distribution` variables, we can see that the new distributions are almost completely normal...an amazing transformation from the original, right-tailed distributions.
 
 
 ```{r}
-exp.bootstrap.distribution = bootstrap(exp.distribution)
+exp.bootstrap.distribution1 = bootstrap(exp.distribution1)
+exp.bootstrap.distribution2 = bootstrap(exp.distribution2)
+```
 
-hist(exp.bootstrap.distribution)
+```{r, echo=FALSE, fig.width=4}
+hist(exp.bootstrap.distribution1, main="")
+```
+```{r, echo=FALSE, fig.width=4}
+hist(exp.bootstrap.distribution2, main="")
 ```
 
 Notice that the bootstrap distribution is centered around 1
 
 ```{r}
-mean(exp.bootstrap.distribution)
+mean(exp.bootstrap.distribution1)
 ```
 
 Finally, notice that the variance is much less within the bootstrap distribution
 
 ```{r}
-sd(exp.distribution)
-sd(exp.bootstrap.distribution)
+sd(exp.distribution1)
+sd(exp.bootstrap.distribution1)
 
 ```
 
